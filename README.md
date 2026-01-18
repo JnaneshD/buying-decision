@@ -5,6 +5,9 @@ A Duolingo-inspired web app that helps you make smarter purchasing decisions by 
 ![Preview](https://img.shields.io/badge/Status-Ready%20to%20Deploy-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
+## Try it out
+[Live App](https://buycheck.netlify.app/)
+
 ## 🎯 What It Does
 
 Ever felt buyer's remorse after an impulsive purchase? This app helps you think twice by converting prices into **work time**.
