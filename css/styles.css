@@ -63,27 +63,39 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  height: 100%;
+  overflow: hidden; /* Prevent body scroll to keep URL bar fixed */
 }
 
 body {
   font-family: var(--font-family);
   background: #FFF9F0;
-  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Lock body scrolling */
+  position: fixed; /* Force fixed positioning context */
   color: var(--color-text-primary);
   line-height: 1.6;
+}
+
+/* Scrollable Wrapper logic */
+.app-wrapper {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* Smith scrolling on iOS */
   position: relative;
+  z-index: 1;
 }
 
 /* Shopping Icons Background Pattern */
 .bg-pattern {
-  position: fixed;
+  position: absolute; /* Changed from fixed to absolute within fixed body */
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh; /* Fallback */
-  height: 100lvh; /* Stable height on mobile (ignores URL bar resize) */
+  height: 100%;
   pointer-events: none;
   z-index: -1;
   overflow: hidden;
