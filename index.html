@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Make smarter buying decisions by seeing how many hours of work each purchase costs you."
+    />
+    <title>💰 Buying Decision - Is It Worth Your Time?</title>
+
+    <!-- Google Fonts - Nunito (Duolingo-style) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- Background Pattern with Shopping Icons -->
+    <div class="bg-pattern">
+      <span class="bg-icon">🛒</span>
+      <span class="bg-icon">💳</span>
+      <span class="bg-icon">🛍️</span>
+      <span class="bg-icon">💰</span>
+      <span class="bg-icon">🏷️</span>
+      <span class="bg-icon">📦</span>
+      <span class="bg-icon">👜</span>
+      <span class="bg-icon">⏰</span>
+      <span class="bg-icon">💵</span>
+      <span class="bg-icon">🎁</span>
+      <span class="bg-icon">💸</span>
+      <span class="bg-icon">🛒</span>
+      <span class="bg-icon">💳</span>
+      <span class="bg-icon">🛍️</span>
+      <span class="bg-icon">💰</span>
+    </div>
+
+    <div id="app">
+      <!-- Onboarding Screen -->
+      <div id="onboarding-screen" class="screen">
+        <div class="onboarding-container">
+          <div class="app-logo">💰</div>
+          <h1 class="title">
+            <span class="highlight">Buying Decision</span>
+          </h1>
+          <p class="subtitle">
+            See how many hours you work for each purchase. Think twice, spend wisely.
+          </p>
+
+          <form id="onboarding-form" class="glass-card">
+            <div class="form-group">
+              <label for="user-name">What's your name? 👋</label>
+              <input
+                type="text"
+                id="user-name"
+                placeholder="Enter your name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="currency">Choose your currency 💱</label>
+              <div class="currency-selector">
+                <button
+                  type="button"
+                  class="currency-btn active"
+                  data-currency="INR"
+                >
+                  <span class="currency-symbol">₹</span>
+                  <span class="currency-name">INR</span>
+                </button>
+                <button type="button" class="currency-btn" data-currency="USD">
+                  <span class="currency-symbol">$</span>
+                  <span class="currency-name">USD</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="monthly-salary">Monthly in-hand salary 💵</label>
+              <div class="salary-input-wrapper">
+                <span class="currency-prefix" id="currency-prefix">₹</span>
+                <input
+                  type="number"
+                  id="monthly-salary"
+                  placeholder="50000"
+                  min="1"
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-large">
+              Let's Go! 🚀
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Main Dashboard Screen -->
+      <div id="dashboard-screen" class="screen hidden">
+        <!-- Header -->
+        <header class="header">
+          <div class="header-left">
+            <span class="header-logo">💰</span>
+            <h2 class="greeting" id="greeting">Hi, User!</h2>
+          </div>
+          <div class="header-right">
+            <button class="btn btn-icon" id="help-btn" title="How it works">❓</button>
+            <button class="btn btn-icon" id="settings-btn" title="Settings">⚙️</button>
+          </div>
+        </header>
+
+        <!-- Compact Stats Bar -->
+        <div class="stats-bar">
+          <div class="stat-pill">
+            <span class="stat-label">Hourly</span>
+            <span class="stat-value" id="stat-hourly">₹284</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-pill">
+            <span class="stat-label">Daily</span>
+            <span class="stat-value" id="stat-daily">₹2,273</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-pill">
+            <span class="stat-label">Monthly</span>
+            <span class="stat-value" id="stat-monthly">₹50,000</span>
+          </div>
+        </div>
+
+        <!-- Add Item Section -->
+        <div class="add-item-section glass-card">
+          <h3>🛒 Thinking of buying something?</h3>
+          <form id="add-item-form">
+            <div class="form-row">
+              <div class="form-group flex-grow">
+                <input
+                  type="text"
+                  id="item-name"
+                  placeholder="What do you want to buy?"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <div class="price-input-wrapper">
+                  <span class="currency-prefix" id="item-currency-prefix"
+                    >₹</span
+                  >
+                  <input
+                    type="number"
+                    id="item-price"
+                    placeholder="Price"
+                    min="1"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input
+                type="url"
+                id="item-url"
+                placeholder="🔗 Product link (optional) - paste URL here"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Calculate Work Time ⏱️
+            </button>
+          </form>
+        </div>
+
+        <!-- Work Time Result (shown after calculation) -->
+        <div id="work-time-result" class="work-time-result glass-card hidden">
+          <div class="result-emoji" id="result-emoji">👟</div>
+          <div class="result-item-name" id="result-item-name">
+            Nike Air Jordan
+          </div>
+          <div class="result-price" id="result-price">₹15,000</div>
+          <div class="result-time">
+            <span class="time-label">This costs you</span>
+            <div class="time-display" id="time-display">
+              <!-- Time blocks will be dynamically generated -->
+            </div>
+            <span class="time-text">of work!</span>
+          </div>
+          <div class="result-progress">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+          <div class="result-message" id="result-message">
+            That's almost a week of your life! 🤔
+          </div>
+          <div class="result-actions">
+            <button class="btn btn-success" id="btn-skip-purchase">
+              Skip It! 🎉 Save Time
+            </button>
+            <button class="btn btn-secondary" id="btn-add-to-list">
+              Add to Wishlist 📝
+            </button>
+          </div>
+        </div>
+
+        <!-- Celebration Overlay -->
+        <div id="celebration-overlay" class="celebration-overlay hidden">
+          <div class="celebration-content">
+            <div class="celebration-emoji">🎉</div>
+            <h2>Amazing Decision!</h2>
+            <p id="celebration-message">You just saved 6 days of work!</p>
+            <div class="confetti-container" id="confetti"></div>
+          </div>
+        </div>
+
+        <!-- Items List Section -->
+        <div class="items-section">
+          <div class="section-header">
+            <h3>📝 Your Wishlist</h3>
+            <button class="btn btn-text" id="btn-clear-all">Clear All</button>
+          </div>
+          <div id="items-list" class="items-list">
+            <!-- Items will be dynamically added here -->
+            <div class="empty-state" id="empty-state">
+              <div class="empty-icon">🛍️</div>
+              <p>No items yet! Add something you're thinking of buying.</p>
+            </div>
+          </div>
+          <div id="list-summary" class="list-summary hidden">
+            <div class="summary-row">
+              <span>Total Items:</span>
+              <span id="total-items">0</span>
+            </div>
+            <div class="summary-row">
+              <span>Total Cost:</span>
+              <span id="total-cost">₹0</span>
+            </div>
+            <div class="summary-row highlight">
+              <span>Total Work Time:</span>
+              <span id="total-work-time">0 days, 0 hours</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+          <p>Made with 💚 to help you save wisely</p>
+        </footer>
+      </div>
+
+      <!-- Settings Modal -->
+      <div id="settings-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content glass-card">
+          <div class="modal-header">
+            <h3>⚙️ Settings</h3>
+            <button class="btn btn-icon modal-close" id="close-settings">
+              ✕
+            </button>
+          </div>
+          <form id="settings-form">
+            <div class="form-group">
+              <label for="edit-name">Your Name</label>
+              <input type="text" id="edit-name" required />
+            </div>
+            <div class="form-group">
+              <label>Currency</label>
+              <div class="currency-selector" id="settings-currency-selector">
+                <button type="button" class="currency-btn" data-currency="INR">
+                  <span class="currency-symbol">₹</span>
+                  <span class="currency-name">INR</span>
+                </button>
+                <button type="button" class="currency-btn" data-currency="USD">
+                  <span class="currency-symbol">$</span>
+                  <span class="currency-name">USD</span>
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="edit-salary">Monthly Salary</label>
+              <div class="salary-input-wrapper">
+                <span class="currency-prefix" id="settings-currency-prefix"
+                  >₹</span
+                >
+                <input type="number" id="edit-salary" min="1" required />
+              </div>
+            </div>
+            <div class="modal-actions">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="cancel-settings"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save Changes
+              </button>
+            </div>
+          </form>
+          <div class="danger-zone">
+            <button class="btn btn-danger" id="reset-data">
+              🗑️ Reset All Data
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Help Modal -->
+      <div id="help-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content glass-card help-modal-content">
+          <div class="modal-header">
+            <h3>❓ How It Works</h3>
+            <button class="btn btn-icon modal-close" id="close-help">✕</button>
+          </div>
+          <div class="help-content">
+            <section class="help-section">
+              <h4>📊 The Idea</h4>
+              <p>This app converts <strong>money into time</strong>. Instead of seeing ₹15,000, you see "6 days of work" — making it easier to decide if a purchase is worth your effort.</p>
+            </section>
+
+            <section class="help-section">
+              <h4>⚙️ Calculation Assumptions</h4>
+              <div class="assumptions-grid">
+                <div class="assumption-item">
+                  <span class="assumption-icon">⏰</span>
+                  <div>
+                    <strong>8 hours</strong>
+                    <span>per work day</span>
+                  </div>
+                </div>
+                <div class="assumption-item">
+                  <span class="assumption-icon">📅</span>
+                  <div>
+                    <strong>22 days</strong>
+                    <span>per work month</span>
+                  </div>
+                </div>
+                <div class="assumption-item">
+                  <span class="assumption-icon">📆</span>
+                  <div>
+                    <strong>264 days</strong>
+                    <span>per work year</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="help-section">
+              <h4>🧮 Example Calculation</h4>
+              <div class="example-box">
+                <p><strong>Monthly Salary:</strong> ₹50,000</p>
+                <p><strong>Daily Rate:</strong> ₹50,000 ÷ 22 = ₹2,273/day</p>
+                <p><strong>Hourly Rate:</strong> ₹2,273 ÷ 8 = ₹284/hour</p>
+                <hr>
+                <p><strong>If you want to buy a phone for ₹15,000:</strong></p>
+                <p>₹15,000 ÷ ₹284/hour = <strong>52.8 hours</strong></p>
+                <p>= <strong>6 days + 4.8 hours</strong> of work!</p>
+              </div>
+            </section>
+
+            <section class="help-section">
+              <h4>🎯 How to Use</h4>
+              <ol class="usage-steps">
+                <li>Enter your <strong>monthly in-hand salary</strong></li>
+                <li>Add items you're thinking of buying</li>
+                <li>See how much <strong>work time</strong> each costs</li>
+                <li>Click <strong>"Skip It!"</strong> to celebrate smart decisions 🎉</li>
+                <li>Or add to <strong>Wishlist</strong> to track items</li>
+              </ol>
+            </section>
+
+            <section class="help-section">
+              <h4>🔒 Privacy</h4>
+              <p>All your data stays in your browser. We don't store anything on servers. Clear your browser data to reset.</p>
+            </section>
+          </div>
+          <div class="modal-actions">
+            <button class="btn btn-primary" id="got-it-btn">Got It! 👍</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
