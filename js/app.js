@@ -40,10 +40,17 @@ const elements = {
     btnSkipPurchase: document.getElementById('btn-skip-purchase'),
     btnAddToList: document.getElementById('btn-add-to-list'),
     
-    // Celebration
+    // Celebration (Skip/Save)
     celebrationOverlay: document.getElementById('celebration-overlay'),
     celebrationMessage: document.getElementById('celebration-message'),
     confettiContainer: document.getElementById('confetti'),
+    
+    // Purchase Celebration (Bought It)
+    purchaseOverlay: document.getElementById('purchase-overlay'),
+    purchaseEmoji: document.getElementById('purchase-emoji'),
+    purchaseTitle: document.getElementById('purchase-title'),
+    purchaseMessage: document.getElementById('purchase-message'),
+    purchaseConfetti: document.getElementById('purchase-confetti'),
     
     // Items List
     itemsList: document.getElementById('items-list'),
@@ -131,6 +138,11 @@ function setupEventListeners() {
     // Close celebration overlay on click
     elements.celebrationOverlay.addEventListener('click', () => {
         elements.celebrationOverlay.classList.add('hidden');
+    });
+
+    // Close purchase overlay on click
+    elements.purchaseOverlay.addEventListener('click', () => {
+        elements.purchaseOverlay.classList.add('hidden');
     });
 
     // Help modal
@@ -436,11 +448,16 @@ function createItemCard(item, currency) {
             <div class="item-time">⏱️ ${formatWorkTime(item.workTime)}</div>
         </div>
         <div class="item-actions">
-            <button class="btn btn-delete" title="Remove">🗑️</button>
+            <button class="btn btn-bought-small" title="Mark as bought">🛍️</button>
+            <button class="btn btn-delete" title="Skip & Save">🗑️</button>
         </div>
     `;
     
-    // Add delete handler
+    // Add Bought It handler
+    const boughtBtn = card.querySelector('.btn-bought-small');
+    boughtBtn.addEventListener('click', () => handleBoughtItem(item));
+    
+    // Add delete handler (Skip & Save)
     const deleteBtn = card.querySelector('.btn-delete');
     deleteBtn.addEventListener('click', () => handleDeleteItem(item.id, item.workTime));
     
@@ -454,7 +471,7 @@ function handleDeleteItem(itemId, workTime) {
     // Remove from storage
     Storage.removeItem(itemId);
     
-    // Show mini celebration
+    // Show mini celebration (savings)
     elements.celebrationMessage.textContent = getCelebrationMessage(workTime);
     elements.celebrationOverlay.classList.remove('hidden');
     createConfetti(elements.confettiContainer);
@@ -466,6 +483,32 @@ function handleDeleteItem(itemId, workTime) {
     setTimeout(() => {
         elements.celebrationOverlay.classList.add('hidden');
     }, 2000);
+}
+
+/**
+ * Handle buying an item (positive affirmation)
+ */
+function handleBoughtItem(item) {
+    // Remove from wishlist
+    Storage.removeItem(item.id);
+    
+    // Get positive purchase message
+    const message = getPurchaseMessage(item);
+    
+    // Show purchase celebration
+    elements.purchaseEmoji.textContent = item.emoji;
+    elements.purchaseTitle.textContent = message.title;
+    elements.purchaseMessage.textContent = message.text;
+    elements.purchaseOverlay.classList.remove('hidden');
+    createPurchaseConfetti(elements.purchaseConfetti);
+    
+    // Re-render items
+    renderItems();
+    
+    // Auto-hide celebration
+    setTimeout(() => {
+        elements.purchaseOverlay.classList.add('hidden');
+    }, 3000);
 }
 
 /**

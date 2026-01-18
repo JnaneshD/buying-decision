@@ -272,22 +272,43 @@ function getCelebrationMessage(workTime) {
  * @param {HTMLElement} container - Container element for confetti
  */
 function createConfetti(container) {
-    const colors = ['#58CC02', '#1CB0F6', '#FF9600', '#FF4B4B', '#CE82FF', '#FF86D0'];
+    // Green money-themed colors
+    const colors = ['#58CC02', '#2E7D32', '#4CAF50', '#81C784', '#A5D6A7', '#C8E6C9'];
+    const moneyEmojis = ['💵', '💰', '💸', '🤑', '💲'];
     
+    // Get viewport width for spreading
+    const viewportWidth = window.innerWidth;
+    
+    // Add colored confetti - spread across full screen
     for (let i = 0; i < 50; i++) {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
-        confetti.style.left = `${Math.random() * 200 - 100}px`;
+        // Spread across full viewport width
+        confetti.style.left = `${Math.random() * viewportWidth}px`;
+        confetti.style.top = `${Math.random() * -100}px`;
         confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.animationDelay = `${Math.random() * 0.5}s`;
-        confetti.style.animationDuration = `${2 + Math.random() * 2}s`;
+        confetti.style.animationDelay = `${Math.random() * 1}s`;
+        confetti.style.animationDuration = `${2.5 + Math.random() * 2}s`;
         container.appendChild(confetti);
     }
     
-    // Clean up confetti after animation
+    // Add floating money emojis - spread across screen
+    for (let i = 0; i < 15; i++) {
+        const money = document.createElement('span');
+        money.className = 'money-float';
+        money.textContent = moneyEmojis[Math.floor(Math.random() * moneyEmojis.length)];
+        // Spread across full viewport width
+        money.style.left = `${Math.random() * viewportWidth}px`;
+        money.style.top = `${50 + Math.random() * 30}%`;
+        money.style.animationDelay = `${Math.random() * 0.8}s`;
+        money.style.animationDuration = `${2 + Math.random() * 1.5}s`;
+        container.appendChild(money);
+    }
+    
+    // Clean up after animation
     setTimeout(() => {
         container.innerHTML = '';
-    }, 4000);
+    }, 5000);
 }
 
 /**
@@ -310,4 +331,63 @@ function getExpenseLevel(price, monthlySalary) {
     if (percentage < 10) return 'low';
     if (percentage < 30) return 'medium';
     return 'high';
+}
+
+/**
+ * Get positive purchase affirmation message
+ * @param {object} item - The purchased item
+ * @returns {object} - Object with title and text
+ */
+function getPurchaseMessage(item) {
+    const affirmations = [
+        { title: "Enjoy Your Purchase! 🛍️", text: "You thought it through and made a mindful choice!" },
+        { title: "Great Decision! ✨", text: "You deserve this. Enjoy your new " + item.name + "!" },
+        { title: "Well Done! 🎯", text: "Smart shopping includes buying what truly matters!" },
+        { title: "Treat Yourself! 💫", text: "Life is about balance. Enjoy your purchase!" },
+        { title: "You Earned It! 🌟", text: "Your hard work made this possible. Enjoy!" },
+        { title: "Congrats! 🎊", text: "A purchase well considered is a purchase well made!" }
+    ];
+    
+    return affirmations[Math.floor(Math.random() * affirmations.length)];
+}
+
+/**
+ * Create purchase celebration confetti (warm colors)
+ * @param {HTMLElement} container - Container element for confetti
+ */
+function createPurchaseConfetti(container) {
+    // Warm orange/gold colors for purchase celebration
+    const colors = ['#FF9800', '#FFB74D', '#FFC107', '#FFD54F', '#FFAB00', '#FF8F00'];
+    const celebrationEmojis = ['🛍️', '✨', '🎉', '💫', '⭐', '🎊'];
+    
+    const viewportWidth = window.innerWidth;
+    
+    // Add colored confetti
+    for (let i = 0; i < 40; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * viewportWidth}px`;
+        confetti.style.top = `${Math.random() * -100}px`;
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = `${Math.random() * 1}s`;
+        confetti.style.animationDuration = `${2.5 + Math.random() * 2}s`;
+        container.appendChild(confetti);
+    }
+    
+    // Add celebration emojis
+    for (let i = 0; i < 12; i++) {
+        const emoji = document.createElement('span');
+        emoji.className = 'money-float';
+        emoji.textContent = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+        emoji.style.left = `${Math.random() * viewportWidth}px`;
+        emoji.style.top = `${50 + Math.random() * 30}%`;
+        emoji.style.animationDelay = `${Math.random() * 0.8}s`;
+        emoji.style.animationDuration = `${2 + Math.random() * 1.5}s`;
+        container.appendChild(emoji);
+    }
+    
+    // Clean up after animation
+    setTimeout(() => {
+        container.innerHTML = '';
+    }, 5000);
 }
